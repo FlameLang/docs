@@ -24,7 +24,7 @@ const config = {
           routeBasePath: '/', //
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/FlameLang/docs/',
+          editUrl: 'https://github.com/FlameLang/docs/tree/main',
         },
         blog: false, // Disable the blog plugin
         theme: {
