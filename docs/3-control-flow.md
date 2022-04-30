@@ -37,7 +37,7 @@ if condition1 {
 There are four types of loops in Flame.
 All of them support the keywords `stop` and `skip`.
 
-* `stop` stops the execution of the loop (quivalent to `break` in some other languages).
+* `stop` stops the execution of the loop (equivalent to `break` in some other languages).
 * `skip` skips the current iteration of the loop and goes straight to the next (equivalent to `continue` in some other languages).
 
 ### For-in
