@@ -25,6 +25,10 @@ human.age = 100
 
 ## Types
 
+An object type is juat a set of field declarations inside braces.
+Field declarations are exactly like constant and variable declarations.
+For example:
+
 We can create object types like so:
 
 ```flame
@@ -39,8 +43,14 @@ We can specify a default value for each field:
 ```flame
 Vec2 {
     x Float = 0.0,
-    y Float = 0.0,
+    y Float = 1.0,
 }
+```
+
+Object fields can also be constant:
+
+```flame
+
 ```
 
 Each object type implicitly defines an object constructor (using the default values if any):
