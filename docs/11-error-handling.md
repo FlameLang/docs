@@ -193,3 +193,49 @@ Therefore Flame has a shorthand - simply append a `?` like so:
 optionalInt: Int?
 optionalString: String?
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+a: func() or { handle error } | "default"
+
+only nil and false are "falsy"
+
+If func returns a Type? then can call like the above to propagate error up if enclosing func also returns Type?
+func()?
+
+ok, how to handle error?
+
+
+
+
+
+what if we have a variable `err` always available in every scope that contains the last error that was added to it via `error(someErr)`.
+`error(...)` returns nil
+
+then `func()?` propagates up when result is `nil`
+and `func()!` panics when result is `nil`
+
+can write `func() | "default"`
+or
+
+```
+func() | print(err)
+func() | panic(err)
+func() | if err.code 
+```
