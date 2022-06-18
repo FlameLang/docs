@@ -1,146 +1,110 @@
 # Basics
 
+## Constants
+
+Constants are named values that can never be reassigned.
+To declare a constant we write `name value`. For example:
+
+```flame
+pi 3.1415
+```
+
+We can now use `pi` wherever we would like to use `3.1415`.
+
 ## Variables
 
-Let's create a variable and assign it a value:
+Variables are named values that can be reassigned.
+Once a variable is declared its type can never be changed.
+
+There are three ways to declare a variable:
+
+1. Write `name Type` to specify the variable's type without assigning it a value:
+
+    ```flame
+    count Int
+    ```
+
+    If we try to use `count` before assigning it a value we will get an error.
+
+2. Write `name Type = value` to specify the variable's type and also assign it an initial value:
+
+    ```flame
+    ready Bool = true
+    ```
+
+3. Write `name: value` to specify only an initial value and have the type be inferred:
+
+    ```flame
+    quote: "Not all those who wander are lost."
+    ```
+
+    Above, `quote` took the type of the value we assigned to it, which in this case is [`String`](https://en.wikipedia.org/wiki/String_(computer_science)).
+
+    We can assign a new value to `quote`, as long as it is also of type `String`:
+        
+    ```flame
+    quote = "There is nothing permanent except change."
+    ```
+
+## Lists
+
+A list is an ordered collection of values.
+To create a list we use square brackets:
 
 ```flame
-universe = 42
+somePrimes [1, 2, 3, 5, 7, 11]
+emptyList []
+multi [1, "hi", SYMBOL]
 ```
 
-Variables have types. Since we didn't specify one in the snippet above, the type of `universe` is `Any`.
-That means `universe` can hold a value of any type.
-For example, we can assign it a value of type `String`:
+List elements can be accessed via indexing:
 
 ```flame
-universe = "Thanks for all the fish!"
+somePrimes[0] # The first element of `somePrimes`
+multi[2] = "cat" # Update the third element of `multi`
 ```
 
-If we want, we can specify a type explicitly when creating a variable:
+To append an element to the end of a list use `push`:
 
 ```flame
-galaxy: Int = 10
+multi.push(🔥)
 ```
 
-`galaxy` has type `Int` (as in [integer](https://en.wikipedia.org/wiki/Integer)).
-If we try assigning `galaxy` a value of any type other than `Int` we get an error:
+## Objects
+
+An object is an unordered collection of named values.
+To create an object we specify its properties' names and values inside parentheses:
 
 ```flame
-galaxy = "brain" # error!
+person (name: "Daniel, age: 29)
 ```
 
-:::important
-Once a variable is created its type can never be changed.
-:::
-
-It's possible to create a variable with the type of the value we are assigning, whatever it may be:
+Object properties can be accessed and updated:
 
 ```flame
-pi := 3.1415
+person.name # "Daniel"
+person.age = 30 # Update person.age
 ```
 
-`pi` has type `Float` (as in a [floating point](https://en.wikipedia.org/wiki/Floating-point_arithmetic) number).
+## Functions
 
-Sometimes we need to declare a variable without assigning it a value yet. We can do that with:
+A function is a reusable block of code.
+To create a function we specify its arguments in parentheses, followed by an arrow, followed by the return type and function body:
 
 ```flame
-name: String
+add (a Int, b Int) -> Int { a + b }
 ```
 
-If we try to use `name` before assigning it a value, we will get an error.
-When we do assign a value to `name` it will have to be of type `String`.
-
-To summarize, the four ways to create a variable are
-
-| Syntax       | Value         | Type             |
-| ------------ | :-----------: | :--------------: |
-| `a = 1`      | `1`           | `Any`            |
-| `b := 1`     | `1`           | `Int` (inferred) |
-| `c: Int = 1` | `1`           | `Int` (explicit) |
-| `d: Int`     | uninitialized | `Int`            |
-
-## Types and Constants
-
-Flame is a gradually-typed language.
-That means you can use types as little or as much as you like.
-For example, you can quickly prototype without types and then add them to increase robustness and safety as ideas solidify.
-
-As we'll see later, types allow you to create some abstractions that are fundamental to developing robust applications.
-Types also help your code interface with external libraries, and help you communicate with other developers.
-In the future they may even help with performance!
-
-These are the built-in types:
-
-| Type     | Note                                                                           |
-| -------- | ------------------------------------------------------------------------------ |
-| `Bool`   | `true` or `false`                                                              |
-| `Int`    | 64-bit integer                                                                 |
-| `Float`  | 64-bit floating point number                                                   |
-| `Char`   | [unicode scalar value](https://www.unicode.org/glossary/#unicode_scalar_value) |
-| `String` | sequence of characters                                                         |
-
-As you may have noticed, the names of all types we've seen so far are capitalized.
-In fact what distinguishes a type from a variable is capitalization.
-
-### All values are types
-
-In Flame, there is a very important concept which is that all values are also types.
-
-For example, the number `1` can be used as a type:
+The parentheses are always necessary.
+If the function body is only a single expression then the return type and braces can be omitted:
 
 ```flame
-one: 1
-```
-:::important
-When a variable is declared with a value as a type then it is also initialized with that value, since there is no other value that could ever be assigned to it.
-:::
-
-`one` can only ever be assigned `1`, which wouldn't change its value. Therefore `one` is a **constant**.
-
-Let's declare a constant for [Pi](https://en.wikipedia.org/wiki/Pi):
-
-```flame
-pi: 3.1415
+hello (name String) -> print("Hello @name!")
 ```
 
-### Type expressions
-
-We can create type expressions.
-
-Say we want a variable that can only ever be assigned `1` or `2`. We can declare it like so:
+To call the functions:
 
 ```flame
-oneOrTwo: 1 | 2
-```
-
-We'll see how to create more advanced types later.
-
-## Operators
-
-The standard number operations include addition, subtraction, multiplication, and division:
-
-```flame
-add = 1 + 2   # 3
-sub = 25 - 17 # 8
-mul = 3 * 7   # 21
-div = 12 / 3  # 4
-```
-
-The equality and inequality operators return a value of type `Bool` - either `true` or `false`. In the example below, every expression returns `true`.
-
-```flame
-"hi" == "hi" # equals
-10 != "cat"  # not equals
-15 < 20      # less than
-4 <= 5       # less than or equal to
-10 > 2       # greater than
-99 >= 99     # greater than or equal to
-```
-
-Boolean operators
-
-```flame
-true & false # false
-true | false # true
-!true        # false
+res add(1, 2) # 3
+hello("Flame") # prints "Hello Flame!"
 ```
