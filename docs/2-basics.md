@@ -16,7 +16,7 @@ We can now use `pi` wherever we would like to use `3.1415`.
 Variables are named values that can be reassigned.
 Once a variable is declared its type can never be changed.
 
-There are three ways to declare a variable in Flame.
+There are three ways to declare a variable:
 
 1. Write `name Type` to specify the variable's type without assigning it a value:
 
@@ -32,7 +32,7 @@ There are three ways to declare a variable in Flame.
     ready Bool = true
     ```
 
-3. Write `name: value` to specify only an initial value and have Flame infer its type:
+3. Write `name: value` to specify only an initial value and have the type be inferred:
 
     ```flame
     quote: "Not all those who wander are lost."
