@@ -3,7 +3,7 @@
 ## Refinement Types
 
 It would be nice to allow defining refinement types.
-For example, defining a type for all prime numbers starting from integers.
+For example, defining a type for all prime numbers.
 One idea is to define a type based on a function over another type e.g.:
 
 ```flame
@@ -18,9 +18,9 @@ It would be nice to allow math with quantities that have associated units, and a
 
 ## Concise Lambda Notation
 
-Simple functions could be created concisely using $-notation.
+Simple functions could be created concisely using `$`-notation.
 
-Using $ as a term inside an expression creates a single-expression function that takes a single parameter:
+Using `$` as a term inside an expression could create a single-expression function that takes a single parameter:
 
 ```flame
 # These are equivalent:

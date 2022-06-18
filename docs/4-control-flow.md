@@ -93,61 +93,97 @@ for i in 0..10 { ... }  # doesn't include 10
 for i in 0..=10 { ... } # includes 10
 ```
 
-## Matching
+## Pattern Matching
 
-Flame has a powerful concept called matching.
+Pattern matching is a powerful way to check multiple conditions in sequence.
 
 ```flame
-number: 141 # Try other values!
-result: number ~ {
+intSize getSomeInt() ~ {
     1 => "small",
     2 | 3 | 4 => "medium",
     5..100 => "large",
-    _ => "other",
+    _ => "huge",
 }
 ```
 
 ### Single match branch
 
+```flame
 if num ~ 1..100 { ... }
-
+```
 
 ### Matching function arguments
 
-It's common to match a function's arguments.
-
-Instead of writing
+It's common to want to match a function's arguments. Instead of writing
 
 ```flame
-func = (a: Int, b: Float) -> {
+someFunc (a: Int, b: Float) -> {
     (a, b) ~ {
         # match body
     }
 }
 ```
 
-Flame has a shorthand using `~>` instead of `->`:
+You can use a "match arrow" `~>` to write:
 
 ```flame
-func = (a: Int, b: Float) ~> {
+someFunc (a: Int, b: Float) ~> {
     # match body
 }
 ```
 
-This is very useful for functional-style functions like:
+This is very useful for functional-style programming e.g.:
 
 ```flame
-maximum = (list: [Any]) ~> Any? {
-    [] => ("),
+maximum (list: [T Any]) ~> T! {
+    [] => error("list is empty"),
     [x] => x,
     [x, ..tail] => max(x, maximum(tail))
 }
 ```
 
+## Propagation of Optionals and Results
 
+When calling a function that returns an optional `Type?` from inside a function that also returns an optional, we can append a trailing question mark to indicate that a `nil` should be propagated upwards. That is, if the inner function returns `nil`, the outer function will immediately return `nil` as well:
 
+```flame
+outer () -> TypeA? {
+    # ...
+    inner()?
+    # ...
+}
+inner () -> TypeB? { ... }
+```
 
+A similar propagation of `Err`s happens to nested functions that return a result `Type!`:
 
-v = v ~ { ... }
-can be shortened to
-v ~= { ... }
+```flame
+outer () -> TypeA! {
+    # ...
+    inner()?
+    # ...
+}
+inner () -> TypeB! { ... }
+```
+
+To return a result when an inner function returns an optional we can write:
+
+```flame
+outer () -> Type! {
+    return inner() | error(...)
+}
+inner () -> Type? { ... }
+```
+
+To return an optional when an inner function returns a result we can write:
+
+```flame
+outer () -> Type? {
+    res inner()
+    if res ~ Err {
+        return nil
+    }
+    return res
+}
+inner () -> Type! { ... }
+```
