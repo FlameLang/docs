@@ -7,7 +7,7 @@ For example, defining a type for all prime numbers.
 One idea is to define a type based on a function over another type e.g.:
 
 ```flame
-Prime isPrime(Int)
+Prime: isPrime(Int)
 ```
 
 `Prime` would represent all integers `i` that satisfy `isPrime(i) == true`.
@@ -24,6 +24,6 @@ Using `$` as a term inside an expression could create a single-expression functi
 
 ```flame
 # These are equivalent:
-addOne (a) -> a + 1
-addOne $ + 1
+addOne: (a) -> a + 1
+addOne: $ + 1
 ```

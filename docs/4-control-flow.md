@@ -5,8 +5,8 @@
 A conditional is an expression that, based on one or more boolean conditions, executes some code and returns a value.
 
 ```flame
-rate 120
-status if rate > 100 { "high" } else { "low" }
+rate: 120
+status: if rate > 100 { "high" } else { "low" }
 ```
 
 Above, `status` will be set to "high".
@@ -14,7 +14,7 @@ Above, `status` will be set to "high".
 An `else` block is not required for a conditional expression to be valid:
 
 ```flame
-message if rate < 10 { "caution!" }
+message: if rate < 10 { "caution!" }
 ```
 
 Above, `message` will be set to the empty value `nil` since the condition evaluates to `false` and there is no `else` block.
@@ -80,7 +80,7 @@ for <value> in <iterator> { ... }
 To loop over an array:
 
 ```flame
-numbers [10, 20, 30]
+numbers: [10, 20, 30]
 for x in numbers {
     print(x)
 }
@@ -98,7 +98,7 @@ for i in 0..=10 { ... } # includes 10
 Pattern matching is a powerful way to check multiple conditions in sequence.
 
 ```flame
-intSize getSomeInt() ~ {
+intSize: getSomeInt() ~ {
     1 => "small",
     2 | 3 | 4 => "medium",
     5..100 => "large",
@@ -117,7 +117,7 @@ if num ~ 1..100 { ... }
 It's common to want to match a function's arguments. Instead of writing
 
 ```flame
-someFunc (a: Int, b: Float) -> {
+someFunc: (a: Int, b: Float) -> {
     (a, b) ~ {
         # match body
     }
@@ -127,7 +127,7 @@ someFunc (a: Int, b: Float) -> {
 You can use a "match arrow" `~>` to write:
 
 ```flame
-someFunc (a: Int, b: Float) ~> {
+someFunc: (a: Int, b: Float) ~> {
     # match body
 }
 ```
@@ -135,7 +135,7 @@ someFunc (a: Int, b: Float) ~> {
 This is very useful for functional-style programming e.g.:
 
 ```flame
-maximum (list: [T Any]) ~> T! {
+maximum: (list: [T Any]) ~> T! {
     [] => error("list is empty"),
     [x] => x,
     [x, ..tail] => max(x, maximum(tail))
@@ -147,43 +147,43 @@ maximum (list: [T Any]) ~> T! {
 When calling a function that returns an optional `Type?` from inside a function that also returns an optional, we can append a trailing question mark to indicate that a `nil` should be propagated upwards. That is, if the inner function returns `nil`, the outer function will immediately return `nil` as well:
 
 ```flame
-outer () -> TypeA? {
+outer: () -> TypeA? {
     # ...
     inner()?
     # ...
 }
-inner () -> TypeB? { ... }
+inner: () -> TypeB? { ... }
 ```
 
 A similar propagation of `Err`s happens to nested functions that return a result `Type!`:
 
 ```flame
-outer () -> TypeA! {
+outer: () -> TypeA! {
     # ...
     inner()?
     # ...
 }
-inner () -> TypeB! { ... }
+inner: () -> TypeB! { ... }
 ```
 
 To return a result when an inner function returns an optional we can write:
 
 ```flame
-outer () -> Type! {
+outer: () -> Type! {
     return inner() | error(...)
 }
-inner () -> Type? { ... }
+inner: () -> Type? { ... }
 ```
 
 To return an optional when an inner function returns a result we can write:
 
 ```flame
-outer () -> Type? {
-    res inner()
+outer: () -> Type? {
+    res: inner()
     if res ~ Err {
         return nil
     }
     return res
 }
-inner () -> Type! { ... }
+inner: () -> Type! { ... }
 ```

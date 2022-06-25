@@ -23,45 +23,45 @@ Symbols, on the other hand, use exclusively uppercase letters.
 
 ## Declaring New Types
 
-To declare a type we write `Name Type`:
+To declare a type we write `Name: Type`:
 
 ```flame
-StatusCode Int
+StatusCode: Int
 ```
 
 To create a list type we surround the list's element type with square brackets:
 
 ```flame
-Numbers [Int]
-Messages [String]
+Numbers: [Int]
+Messages: [String]
 ```
 
 To create an object type we specify its properties' names and types inside parentheses:
 
 ```flame
-Person (
-    name String
-    age Int
+Person: (
+    name: String
+    age:  Int
 )
 ```
 
 To create a function type we specify the types of the arguments (in order) and the returned type:
 
 ```flame
-Summation (Int, Int) -> Int
-ToString () -> String
-Effect () -> Nil
+Summation: (Int, Int) -> Int
+ToString: () -> String
+Effect: () -> Nil
 ```
 
 Here is an example of a complex type:
 
 ```flame
-EventList (
-    events [(
-        eventCode Int
-        eventMessage String
+EventList: (
+    events: [(
+        eventCode:    Int
+        eventMessage: String
     )]
-    lastEventCode () -> Int
+    lastEventCode: () -> Int
 )
 ```
 
@@ -72,11 +72,11 @@ Inside a method's body we can access the instance via `&`.
 For example:
 
 ```flame
-Vec2.sum (other Vec2) -> {
+Vec2.sum: (other: Vec2) -> {
     &.x += other.x
     &.y += other.y
 }
-EventList.clear () -> {
+EventList.clear: () -> {
     &.events = []
 }
 ```
@@ -96,16 +96,16 @@ We can denote a type union by using `|` between types. A type of `A|B` means “
 To illustrate, let's declare a type that is either a `String` or a `Bool`:
 
 ```flame
-StringOrBool String|Bool
+StringOrBool: String|Bool
 ```
 
 You can also use values in type unions.
 Here are more examples of type unions:
 
 ```flame
-DiceRoll 1|2|3|4|5|6
-Num Int|Float
-Crud CREATE|READ|UPDATE|DELETE 
+DiceRoll: 1|2|3|4|5|6
+Num: Int|Float
+Crud: CREATE|READ|UPDATE|DELETE 
 ```
 
 ## Type Intersections
@@ -116,20 +116,20 @@ We can denote a type intersection by using `+` between types. A type of `A+B` me
 For example let's say we have the following types:
 
 ```flame
-Named (name String)
-Position (x Int, y Int)
+Named: (name: String)
+Position: (x: Int, y: Int)
 ```
 
 We can declare a new intersection type `NamedPosition` like so:
 
 ```flame
-NamedPosition Named+Position
+NamedPosition: Named+Position
 ```
 
 And use it like this:
 
 ```flame
-north NamedPosition(name: "North", x: 0, y: 10)
+north := NamedPosition(name: "North", x: 0, y: 10)
 ```
 
 ## Optionals
@@ -138,8 +138,8 @@ An optional is a type union between some type and `nil`.
 Flame has a shorthand for optionals - simply append a `?` at the end of a type:
 
 ```flame
-OptionalInt Int? # equivalent to Int|nil
-OptionalString String? # equivalent to String|nil
+OptionalInt: Int? # equivalent to Int|nil
+OptionalString: String? # equivalent to String|nil
 ```
 
 ## Results
@@ -147,12 +147,12 @@ OptionalString String? # equivalent to String|nil
 A result is a type union between some type and `Err`, where `Err` is the type of all Flame errors:
 
 ```flame
-Err (err String)
+Err: (err: String)
 ```
 
 Flame has a shorthand for results - simply append a `!` at the end of a type:
 
 ```flame
-IntOrErr Int! # equivalent to Int|Err
-StringOrErr String! # equivalent to String|Err
+IntOrErr: Int! # equivalent to Int|Err
+StringOrErr: String! # equivalent to String|Err
 ```
