@@ -76,7 +76,7 @@ An object is an unordered collection of named values.
 To create an object we specify its properties' names and values inside parentheses:
 
 ```flame
-person := (name: "Daniel, age: 29)
+person := (name: "Daniel", age: 29)
 ```
 
 Object properties can be accessed and updated:
